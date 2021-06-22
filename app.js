@@ -37,14 +37,14 @@ const Peru = require('./models/PeruModel');
 
 require('dotenv').config({path: './variables.env'});
 const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 4000;
 connectDB();
 
 //Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
-app.use(rateLimiter({time_restore: 86400, number_requests: 1000}));
+app.use(rateLimiter({time_restore: 86400, number_requests: 100}));
 
 global.peru = {};
 global.amazonas = {};
@@ -82,7 +82,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
   global.peru = JSON.parse(mystr);
   const count = await Peru.countDocuments({});
   
-  if(count > 100){
+  if(count > 10){
     const primer_elemento = await Peru.find({}).limit(1);
     await Peru.deleteOne({_id: primer_elemento[0]._id});
     const peru = await Peru.create(global.peru);
@@ -101,7 +101,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
     global.amazonas = JSON.parse(mystr);
     const count = await Amazonas.countDocuments({});
     
-    if(count > 100){
+    if(count > 10){
       const primer_elemento = await Amazonas.find({}).limit(1);
       await Amazonas.deleteOne({_id: primer_elemento[0]._id});
       const amazonas = await Amazonas.create(global.amazonas);
@@ -120,7 +120,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
       global.ancash = JSON.parse(mystr);
       const count = await Ancash.countDocuments({});
       
-      if(count > 100){
+      if(count > 10){
         const primer_elemento = await Ancash.find({}).limit(1);
         await Ancash.deleteOne({_id: primer_elemento[0]._id});
         const ancash = await Ancash.create(global.ancash);
@@ -139,7 +139,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
         global.apurimac = JSON.parse(mystr);
         const count = await Apurimac.countDocuments({});
         
-        if(count > 100){
+        if(count > 10){
           const primer_elemento = await Apurimac.find({}).limit(1);
           await Apurimac.deleteOne({_id: primer_elemento[0]._id});
           const apurimac = await Apurimac.create(global.apurimac);
@@ -158,7 +158,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
           global.arequipa = JSON.parse(mystr);
           const count = await Arequipa.countDocuments({});
           
-          if(count > 100){
+          if(count > 10){
             const primer_elemento = await Arequipa.find({}).limit(1);
             await Arequipa.deleteOne({_id: primer_elemento[0]._id});
             const arequipa = await Arequipa.create(global.arequipa);
@@ -177,7 +177,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
             global.ayacucho = JSON.parse(mystr);
             const count = await Ayacucho.countDocuments({});
             
-            if(count > 100){
+            if(count > 10){
               const primer_elemento = await Ayacucho.find({}).limit(1);
               await Ayacucho.deleteOne({_id: primer_elemento[0]._id});
               const ayacucho = await Ayacucho.create(global.ayacucho);
@@ -196,7 +196,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
               global.cajamarca = JSON.parse(mystr);
               const count = await Cajamarca.countDocuments({});
 
-              if(count > 100){
+              if(count > 10){
                 const primer_elemento = await Cajamarca.find({}).limit(1);
                 await Cajamarca.deleteOne({_id: primer_elemento[0]._id});
                 const cajamarca = await Cajamarca.create(global.cajamarca);
@@ -215,7 +215,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                 global.callao = JSON.parse(mystr);
                 const count = await Callao.countDocuments({});
                 
-                if(count > 100){
+                if(count > 10){
                   const primer_elemento = await Callao.find({}).limit(1);
                   await Callao.deleteOne({_id: primer_elemento[0]._id});
                   const callao = await Callao.create(global.callao);
@@ -234,7 +234,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                   global.cusco = JSON.parse(mystr);
                   const count = await Cusco.countDocuments({});
                   
-                  if(count > 100){
+                  if(count > 10){
                     const primer_elemento = await Cusco.find({}).limit(1);
                     await Cusco.deleteOne({_id: primer_elemento[0]._id});
                     const cusco = await Cusco.create(global.cusco);
@@ -253,7 +253,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                     global.huancavelica = JSON.parse(mystr);
                     const count = await Huancavelica.countDocuments({});
                     
-                    if(count > 100){
+                    if(count > 10){
                       const primer_elemento = await Huancavelica.find({}).limit(1);
                       await Huancavelica.deleteOne({_id: primer_elemento[0]._id});
                       const huancavelica = await Huancavelica.create(global.huancavelica);
@@ -272,7 +272,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                       global.huanuco = JSON.parse(mystr);
                       const count = await Huanuco.countDocuments({});
                       
-                      if(count > 100){
+                      if(count > 10){
                         const primer_elemento = await Huanuco.find({}).limit(1);
                         await Huanuco.deleteOne({_id: primer_elemento[0]._id});
                         const huanuco = await Huanuco.create(global.huanuco);
@@ -291,7 +291,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                         global.ica = JSON.parse(mystr);
                         const count = await Ica.countDocuments({});
                         
-                        if(count > 100){
+                        if(count > 10){
                           const primer_elemento = await Ica.find({}).limit(1);
                           await Ica.deleteOne({_id: primer_elemento[0]._id});
                           const ica = await Ica.create(global.ica);
@@ -310,7 +310,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                           global.junin = JSON.parse(mystr);
                           const count = await Junin.countDocuments({});
                           
-                          if(count > 100){
+                          if(count > 10){
                             const primer_elemento = await Junin.find({}).limit(1);
                             await Junin.deleteOne({_id: primer_elemento[0]._id});
                             const junin = await Junin.create(global.junin);
@@ -329,7 +329,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                             global.lalibertad = JSON.parse(mystr);
                             const count = await LaLibertad.countDocuments({});
                             
-                            if(count > 100){
+                            if(count > 10){
                               const primer_elemento = await LaLibertad.find({}).limit(1);
                               await LaLibertad.deleteOne({_id: primer_elemento[0]._id});
                               const lalibertad = await LaLibertad.create(global.lalibertad);
@@ -348,7 +348,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                               global.lambayeque = JSON.parse(mystr);
                               const count = await Lambayeque.countDocuments({});
                               
-                              if(count > 100){
+                              if(count > 10){
                                 const primer_elemento = await Lambayeque.find({}).limit(1);
                                 await Lambayeque.deleteOne({_id: primer_elemento[0]._id});
                                 const lambayeque = await Lambayeque.create(global.lambayeque);
@@ -367,7 +367,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                 global.lima = JSON.parse(mystr);
                                 const count = await Lima.countDocuments({});
                                 
-                                if(count > 100){
+                                if(count > 10){
                                   const primer_elemento = await Lima.find({}).limit(1);
                                   await Lima.deleteOne({_id: primer_elemento[0]._id});
                                   const lima = await Lima.create(global.lima);
@@ -386,7 +386,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                   global.loreto = JSON.parse(mystr);
                                   const count = await Loreto.countDocuments({});
                                   
-                                  if(count > 100){
+                                  if(count > 10){
                                     const primer_elemento = await Loreto.find({}).limit(1);
                                     await Loreto.deleteOne({_id: primer_elemento[0]._id});
                                     const loreto = await Loreto.create(global.loreto);
@@ -405,7 +405,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                     global.madrededios = JSON.parse(mystr);
                                     const count = await MadreDeDios.countDocuments({});
                                     
-                                    if(count > 100){
+                                    if(count > 10){
                                       const primer_elemento = await MadreDeDios.find({}).limit(1);
                                       await MadreDeDios.deleteOne({_id: primer_elemento[0]._id});
                                       const madrededios = await MadreDeDios.create(global.madrededios);
@@ -424,7 +424,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                       global.moquegua = JSON.parse(mystr);
                                       const count = await Moquegua.countDocuments({});
 
-                                      if(count > 100){
+                                      if(count > 10){
                                         const primer_elemento = await Moquegua.find({}).limit(1);
                                         await Moquegua.deleteOne({_id: primer_elemento[0]._id});
                                         const moquegua = await Moquegua.create(global.moquegua);
@@ -443,7 +443,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                         global.pasco = JSON.parse(mystr);
                                         const count = await Pasco.countDocuments({});
 
-                                        if(count > 100){
+                                        if(count > 10){
                                           const primer_elemento = await Pasco.find({}).limit(1);
                                           await Pasco.deleteOne({_id: primer_elemento[0]._id});
                                           const pasco = await Pasco.create(global.pasco);
@@ -462,7 +462,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                           global.piura = JSON.parse(mystr);
                                           const count = await Piura.countDocuments({});
 
-                                          if(count > 100){
+                                          if(count > 10){
                                             const primer_elemento = await Piura.find({}).limit(1);
                                             await Piura.deleteOne({_id: primer_elemento[0]._id});
                                             const piura = await Piura.create(global.piura);
@@ -481,7 +481,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                             global.puno = JSON.parse(mystr);
                                             const count = await Puno.countDocuments({});
 
-                                            if(count > 100){
+                                            if(count > 10){
                                               const primer_elemento = await Puno.find({}).limit(1);
                                               await Puno.deleteOne({_id: primer_elemento[0]._id});
                                               const puno = await Puno.create(global.puno);
@@ -500,7 +500,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                               global.sanmartin = JSON.parse(mystr);
                                               const count = await SanMartin.countDocuments({});
 
-                                              if(count > 100){
+                                              if(count > 10){
                                                 const primer_elemento = await SanMartin.find({}).limit(1);
                                                 await SanMartin.deleteOne({_id: primer_elemento[0]._id});
                                                 const sanmartin = await SanMartin.create(global.sanmartin);
@@ -519,7 +519,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                                 global.tacna = JSON.parse(mystr);
                                                 const count = await Tacna.countDocuments({});
                                                 
-                                                if(count > 100){
+                                                if(count > 10){
                                                   const primer_elemento = await Tacna.find({}).limit(1).sort({createdAt: 1});
                                                   await Tacna.deleteOne({_id: primer_elemento[0]._id});
                                                   const tacna = await Tacna.create(global.tacna);
@@ -537,7 +537,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                                   //convert string into json
                                                   global.tumbes = JSON.parse(mystr);
                                                   const count = await Tumbes.countDocuments({});
-                                                  if(count > 100){
+                                                  if(count > 10){
                                                     const primer_elemento = await Tumbes.find({}).limit(1);
                                                     await Tumbes.deleteOne({_id: primer_elemento[0]._id});
                                                     const tumbes = await Tumbes.create(global.tumbes);
@@ -556,7 +556,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                                     global.ucayali = JSON.parse(mystr);
                                                     const count = await Ucayali.countDocuments({});
                                                     
-                                                    if(count > 100){
+                                                    if(count > 10){
                                                       const primer_elemento = await Ucayali.find({}).limit(1);
                                                       await Ucayali.deleteOne({_id: primer_elemento[0]._id});
                                                       const ucayali = await Ucayali.create(global.ucayali);
@@ -620,7 +620,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
   global.peru = JSON.parse(mystr);
   const count = await Peru.countDocuments({});
   
-  if(count > 100){
+  if(count > 10){
     const primer_elemento = await Peru.find({}).limit(1);
     await Peru.deleteOne({_id: primer_elemento[0]._id});
     const peru = await Peru.create(global.peru);
@@ -639,7 +639,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
     global.amazonas = JSON.parse(mystr);
     const count = await Amazonas.countDocuments({});
     
-    if(count > 100){
+    if(count > 10){
       const primer_elemento = await Amazonas.find({}).limit(1);
       await Amazonas.deleteOne({_id: primer_elemento[0]._id});
       const amazonas = await Amazonas.create(global.amazonas);
@@ -658,7 +658,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
       global.ancash = JSON.parse(mystr);
       const count = await Ancash.countDocuments({});
       
-      if(count > 100){
+      if(count > 10){
         const primer_elemento = await Ancash.find({}).limit(1);
         await Ancash.deleteOne({_id: primer_elemento[0]._id});
         const ancash = await Ancash.create(global.ancash);
@@ -677,7 +677,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
         global.apurimac = JSON.parse(mystr);
         const count = await Apurimac.countDocuments({});
         
-        if(count > 100){
+        if(count > 10){
           const primer_elemento = await Apurimac.find({}).limit(1);
           await Apurimac.deleteOne({_id: primer_elemento[0]._id});
           const apurimac = await Apurimac.create(global.apurimac);
@@ -696,7 +696,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
           global.arequipa = JSON.parse(mystr);
           const count = await Arequipa.countDocuments({});
           
-          if(count > 100){
+          if(count > 10){
             const primer_elemento = await Arequipa.find({}).limit(1);
             await Arequipa.deleteOne({_id: primer_elemento[0]._id});
             const arequipa = await Arequipa.create(global.arequipa);
@@ -715,7 +715,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
             global.ayacucho = JSON.parse(mystr);
             const count = await Ayacucho.countDocuments({});
             
-            if(count > 100){
+            if(count > 10){
               const primer_elemento = await Ayacucho.find({}).limit(1);
               await Ayacucho.deleteOne({_id: primer_elemento[0]._id});
               const ayacucho = await Ayacucho.create(global.ayacucho);
@@ -734,7 +734,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
               global.cajamarca = JSON.parse(mystr);
               const count = await Cajamarca.countDocuments({});
 
-              if(count > 100){
+              if(count > 10){
                 const primer_elemento = await Cajamarca.find({}).limit(1);
                 await Cajamarca.deleteOne({_id: primer_elemento[0]._id});
                 const cajamarca = await Cajamarca.create(global.cajamarca);
@@ -753,7 +753,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                 global.callao = JSON.parse(mystr);
                 const count = await Callao.countDocuments({});
                 
-                if(count > 100){
+                if(count > 10){
                   const primer_elemento = await Callao.find({}).limit(1);
                   await Callao.deleteOne({_id: primer_elemento[0]._id});
                   const callao = await Callao.create(global.callao);
@@ -772,7 +772,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                   global.cusco = JSON.parse(mystr);
                   const count = await Cusco.countDocuments({});
                   
-                  if(count > 100){
+                  if(count > 10){
                     const primer_elemento = await Cusco.find({}).limit(1);
                     await Cusco.deleteOne({_id: primer_elemento[0]._id});
                     const cusco = await Cusco.create(global.cusco);
@@ -791,7 +791,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                     global.huancavelica = JSON.parse(mystr);
                     const count = await Huancavelica.countDocuments({});
                     
-                    if(count > 100){
+                    if(count > 10){
                       const primer_elemento = await Huancavelica.find({}).limit(1);
                       await Huancavelica.deleteOne({_id: primer_elemento[0]._id});
                       const huancavelica = await Huancavelica.create(global.huancavelica);
@@ -810,7 +810,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                       global.huanuco = JSON.parse(mystr);
                       const count = await Huanuco.countDocuments({});
                       
-                      if(count > 100){
+                      if(count > 10){
                         const primer_elemento = await Huanuco.find({}).limit(1);
                         await Huanuco.deleteOne({_id: primer_elemento[0]._id});
                         const huanuco = await Huanuco.create(global.huanuco);
@@ -829,7 +829,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                         global.ica = JSON.parse(mystr);
                         const count = await Ica.countDocuments({});
                         
-                        if(count > 100){
+                        if(count > 10){
                           const primer_elemento = await Ica.find({}).limit(1);
                           await Ica.deleteOne({_id: primer_elemento[0]._id});
                           const ica = await Ica.create(global.ica);
@@ -848,7 +848,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                           global.junin = JSON.parse(mystr);
                           const count = await Junin.countDocuments({});
                           
-                          if(count > 100){
+                          if(count > 10){
                             const primer_elemento = await Junin.find({}).limit(1);
                             await Junin.deleteOne({_id: primer_elemento[0]._id});
                             const junin = await Junin.create(global.junin);
@@ -867,7 +867,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                             global.lalibertad = JSON.parse(mystr);
                             const count = await LaLibertad.countDocuments({});
                             
-                            if(count > 100){
+                            if(count > 10){
                               const primer_elemento = await LaLibertad.find({}).limit(1);
                               await LaLibertad.deleteOne({_id: primer_elemento[0]._id});
                               const lalibertad = await LaLibertad.create(global.lalibertad);
@@ -886,7 +886,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                               global.lambayeque = JSON.parse(mystr);
                               const count = await Lambayeque.countDocuments({});
                               
-                              if(count > 100){
+                              if(count > 10){
                                 const primer_elemento = await Lambayeque.find({}).limit(1);
                                 await Lambayeque.deleteOne({_id: primer_elemento[0]._id});
                                 const lambayeque = await Lambayeque.create(global.lambayeque);
@@ -905,7 +905,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                 global.lima = JSON.parse(mystr);
                                 const count = await Lima.countDocuments({});
                                 
-                                if(count > 100){
+                                if(count > 10){
                                   const primer_elemento = await Lima.find({}).limit(1);
                                   await Lima.deleteOne({_id: primer_elemento[0]._id});
                                   const lima = await Lima.create(global.lima);
@@ -924,7 +924,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                   global.loreto = JSON.parse(mystr);
                                   const count = await Loreto.countDocuments({});
                                   
-                                  if(count > 100){
+                                  if(count > 10){
                                     const primer_elemento = await Loreto.find({}).limit(1);
                                     await Loreto.deleteOne({_id: primer_elemento[0]._id});
                                     const loreto = await Loreto.create(global.loreto);
@@ -943,7 +943,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                     global.madrededios = JSON.parse(mystr);
                                     const count = await MadreDeDios.countDocuments({});
                                     
-                                    if(count > 100){
+                                    if(count > 10){
                                       const primer_elemento = await MadreDeDios.find({}).limit(1);
                                       await MadreDeDios.deleteOne({_id: primer_elemento[0]._id});
                                       const madrededios = await MadreDeDios.create(global.madrededios);
@@ -962,7 +962,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                       global.moquegua = JSON.parse(mystr);
                                       const count = await Moquegua.countDocuments({});
 
-                                      if(count > 100){
+                                      if(count > 10){
                                         const primer_elemento = await Moquegua.find({}).limit(1);
                                         await Moquegua.deleteOne({_id: primer_elemento[0]._id});
                                         const moquegua = await Moquegua.create(global.moquegua);
@@ -981,7 +981,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                         global.pasco = JSON.parse(mystr);
                                         const count = await Pasco.countDocuments({});
 
-                                        if(count > 100){
+                                        if(count > 10){
                                           const primer_elemento = await Pasco.find({}).limit(1);
                                           await Pasco.deleteOne({_id: primer_elemento[0]._id});
                                           const pasco = await Pasco.create(global.pasco);
@@ -1000,7 +1000,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                           global.piura = JSON.parse(mystr);
                                           const count = await Piura.countDocuments({});
 
-                                          if(count > 100){
+                                          if(count > 10){
                                             const primer_elemento = await Piura.find({}).limit(1);
                                             await Piura.deleteOne({_id: primer_elemento[0]._id});
                                             const piura = await Piura.create(global.piura);
@@ -1019,7 +1019,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                             global.puno = JSON.parse(mystr);
                                             const count = await Puno.countDocuments({});
 
-                                            if(count > 100){
+                                            if(count > 10){
                                               const primer_elemento = await Puno.find({}).limit(1);
                                               await Puno.deleteOne({_id: primer_elemento[0]._id});
                                               const puno = await Puno.create(global.puno);
@@ -1038,7 +1038,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                               global.sanmartin = JSON.parse(mystr);
                                               const count = await SanMartin.countDocuments({});
 
-                                              if(count > 100){
+                                              if(count > 10){
                                                 const primer_elemento = await SanMartin.find({}).limit(1);
                                                 await SanMartin.deleteOne({_id: primer_elemento[0]._id});
                                                 const sanmartin = await SanMartin.create(global.sanmartin);
@@ -1057,7 +1057,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                                 global.tacna = JSON.parse(mystr);
                                                 const count = await Tacna.countDocuments({});
                                                 
-                                                if(count > 100){
+                                                if(count > 10){
                                                   const primer_elemento = await Tacna.find({}).limit(1).sort({createdAt: 1});
                                                   await Tacna.deleteOne({_id: primer_elemento[0]._id});
                                                   const tacna = await Tacna.create(global.tacna);
@@ -1075,7 +1075,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                                   //convert string into json
                                                   global.tumbes = JSON.parse(mystr);
                                                   const count = await Tumbes.countDocuments({});
-                                                  if(count > 100){
+                                                  if(count > 10){
                                                     const primer_elemento = await Tumbes.find({}).limit(1);
                                                     await Tumbes.deleteOne({_id: primer_elemento[0]._id});
                                                     const tumbes = await Tumbes.create(global.tumbes);
@@ -1094,7 +1094,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
                                                     global.ucayali = JSON.parse(mystr);
                                                     const count = await Ucayali.countDocuments({});
                                                     
-                                                    if(count > 100){
+                                                    if(count > 10){
                                                       const primer_elemento = await Ucayali.find({}).limit(1);
                                                       await Ucayali.deleteOne({_id: primer_elemento[0]._id});
                                                       const ucayali = await Ucayali.create(global.ucayali);
