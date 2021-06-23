@@ -44,7 +44,6 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
-app.use(rateLimiter({time_restore: 86400, number_requests: 100}));
 
 global.peru = {};
 global.amazonas = {};
@@ -1134,6 +1133,7 @@ pythonPeruProcess.stdout.on('data', async (data) => {
 
 //APIS
 app.use('/', require('./routes/AppRoute'));
+app.use(rateLimiter({time_restore: 86400, number_requests: 100}));
 app.use('/api', require('./routes/GeneralApi'));
 app.use('/api', require('./routes/DepartamentoApi'));
 app.use('/api', require('./routes/ProvinciaApi'));
