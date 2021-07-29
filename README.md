@@ -17,8 +17,8 @@ Redis |
 QGIS
 
 **ENLACES PARA ENTENDER MEJOR LA APP:**
-* [Tutorial sobre la aplicación]()
-* [Tutorial para scrapear datos masivos]()
+* [Tutorial sobre la aplicación](https://www.youtube.com/watch?v=_hEst_un5tM)
+* [Tutorial para construir tu propia API scrapeando datos masivos](https://www.youtube.com/watch?v=5azYQzB2dFU)
 
 ## Cómo Contribuir Al Proyecto? 
 1. Hacer fork del proyecto
@@ -47,19 +47,32 @@ QGIS
         pip3 install
      ```
 
-4. Ejecutar aplicación
+4. Instalar y Ejecutar Redis
+   ```bash
+      sudo apt update
+      sudo apt install redis-server
+      redis-server & //Ejecutar el servidor en segundo plano
+      redis-cli //Verificar host y puerto del servidor de Redis
+   ```
+5. Crear variables de entorno (variables.env)
+   ```javascript
+      MONGO_URI = url de tu BD de mongo local o remoto
+      REDIS_HOST = host de tu servidor de redis
+      REDIS_PORT = puerto de tu servidor de redis
+   ```
+6. Ejecutar aplicación
    ```bash
       npm run dev
    ```
-5. Realizar cambios y pushearlos
+7. Realizar cambios y pushearlos
     ```git
       git push origin main
     ```
-6. Comparar y crear PR
+8. Comparar y crear PR
 
    ![Fork](./public/images/pull-request.png)
   
-7. A esperar el mergeo del PR ✿◡‿◡
+9. A esperar el mergeo del PR ✿◡‿◡
 
 **IMPORTANTE:** Para correr esta aplicación tienes que tener instalado _NodeJS_ y _Python_
 
