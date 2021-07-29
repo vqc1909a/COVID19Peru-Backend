@@ -31,7 +31,7 @@ Router.get("/provincias", async (req, res) => {
 
 Router.get('/pais', async (req, res, next) => {
   const limit = req.query.limit ? parseInt(req.query.limit) : 1;
-  if(isNaN(limit) || limit < 1 || limit > 10){
+  if(isNaN(limit) || limit < 1 || limit > 100){
    return next();
   }
   const nacional = await Peru.find({}).limit(limit).sort({createdAt: -1}).select(["-mapa_hijos", "-createdAt"]);
