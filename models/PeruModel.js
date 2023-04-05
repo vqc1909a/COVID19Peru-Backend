@@ -51,10 +51,6 @@ const PeruSchema = new mongoose.Schema({
       type: Number,
       required: true
     },
-    recuperados: {
-      type: Number,
-      required: true
-    },
     fallecidos: {
       type: Number,
       required: true
@@ -67,23 +63,16 @@ const PeruSchema = new mongoose.Schema({
       type: Number,
       required: true
     },
-    mapa_hijos: [Number],
     etapa_de_vida_fallecidos: EtapaSchema,
-    createdAt: {
+    mapa_hijos: [Number],
+    fecha: {
       type: Date,
-      default: Date.now()
-    },
-    fecha: Number,
-    mes: String,
-    dia: Number
-})
-
-PeruSchema.pre("save", function(next){
-  const data = new Date(`${this.createdAt}`);
-  this.fecha = data.getFullYear();
-  this.mes = meses[data.getMonth()];
-  this.dia = data.getDate();
-  next()
+      required: true
+    }
+}, {
+    timestamps: true,
+    versionKey: false,
+    minimize: false
 })
 
 const Peru = mongoose.model('Peru', PeruSchema);
