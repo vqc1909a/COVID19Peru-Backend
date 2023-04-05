@@ -3,9 +3,7 @@ const cors = require('cors');
 const app = express();
 const connectDB = require('./config/db.js');
 const spawn = require('child_process').spawn;
-const rateLimiter = require("./middlewares/rate-limiter");
 const { NotFoundMiddleware, ErrorMiddleware} = require('./middlewares');
-const redis = require("redis");
 
 const {
   Loreto, 
@@ -36,7 +34,6 @@ const {
 const Peru = require('./models/PeruModel');
 
 require('dotenv').config({path: './variables.env'});
-const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
 const port = process.env.PORT || 4000;
 connectDB();
 
@@ -592,10 +589,6 @@ pythonPeruProcess.stdout.on('data', async (data) => {
 
 setInterval(()=>{
 
-client.flushall('ASYNC', () => {
-  console.log("Datos borrados correctamente");
-});
-
 let pythonPeruProcess = spawn('python', ['./python/peru.py']);
 pythonPeruProcess.stdout.on('data', async (data) => {
   //convert string to Json
@@ -1119,7 +1112,6 @@ pythonPeruProcess.stdout.on('data', async (data) => {
 
 //APIS
 app.use('/', require('./routes/AppRoute'));
-app.use(rateLimiter({time_restore: 86400, number_requests: 100}));
 app.use('/api', require('./routes/GeneralApi'));
 app.use('/api', require('./routes/DepartamentoApi'));
 app.use('/api', require('./routes/ProvinciaApi'));

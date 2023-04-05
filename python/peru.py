@@ -6,17 +6,6 @@ from casos import casos_positivos, casos_fallecidos
 
 
 poblacion_total = 33028673
-URL = "https://es.wikipedia.org/wiki/Pandemia_de_COVID-19_en_Per%C3%BA"
-page = requests.get(URL)
-soup = BeautifulSoup(page.content, "html.parser")
-total_recuperados = 0
-for th in soup.find_all('th'):
-    if th.text == 'Casos recuperados':
-        total_recuperados_string = ''
-        for palabra in th.parent.td.text.strip().split():
-         total_recuperados_string += palabra
-        total_recuperados = int(total_recuperados_string)
-
 
 #!total_positivos: esto me obtiene una tupla de filas y columnas, por eso lo convierto en un array
 total_positivos = list(casos_positivos.shape)[0]
@@ -169,11 +158,11 @@ positivos_callao = list(
     casos_positivos[casos_positivos['DEPARTAMENTO'] == "CALLAO"].shape)[0]
 
 #!Fallecidos por etapa de vida
-#!0 a 5 años (Primera infancia ó Bebes)
+#!0 a 5 años (Primera infancia o Bebes o Infancia Temprana)
 fallecidos_preinfancia = list(casos_fallecidos[(casos_fallecidos['EDAD_DECLARADA'] >= 0) & (
     casos_fallecidos['EDAD_DECLARADA'] <= 5)].shape)[0]
 
-#!6 a 11 años (Infancia o Niños)
+#!6 a 11 años (Infancia o Niños o Niñez)
 fallecidos_infancia = list(casos_fallecidos[(casos_fallecidos['EDAD_DECLARADA'] >= 6) & (
     casos_fallecidos['EDAD_DECLARADA'] <= 11)].shape)[0]
 
@@ -199,10 +188,17 @@ casos_generales = {
     "positivos": total_positivos,
     "hombres_infectados": total_positivos_hombres,
     "mujeres_infectados": total_positivos_mujeres,
-    "recuperados": total_recuperados,
     "fallecidos": total_fallecidos,
     "hombres_fallecidos": total_fallecidos_hombres,
     "mujeres_fallecidos": total_fallecidos_mujeres,
+    "etapa_de_vida_fallecidos": {
+        "primera_infancia": fallecidos_preinfancia,
+        "infancia": fallecidos_infancia,
+        "adolescencia": fallecidos_adolescencia,
+        "juventud": fallecidos_juventud,
+        "adultez": fallecidos_adultez,
+        "persona_mayor": fallecidos_persona_mayor
+    },
     "mapa_hijos": [
         positivos_amazonas,
         positivos_ancash,
@@ -229,15 +225,7 @@ casos_generales = {
         positivos_tacna,
         positivos_tumbes,
         positivos_ucayali
-    ],
-    "etapa_de_vida_fallecidos": {
-        "primera_infancia": fallecidos_preinfancia,
-        "infancia": fallecidos_infancia,
-        "adolescencia": fallecidos_adolescencia,
-        "juventud": fallecidos_juventud,
-        "adultez": fallecidos_adultez,
-        "persona_mayor": fallecidos_persona_mayor
-    }
+    ]
 }
 
 print(json.dumps(casos_generales));
