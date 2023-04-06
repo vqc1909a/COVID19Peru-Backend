@@ -64,7 +64,6 @@ const PeruSchema = new mongoose.Schema({
       required: true
     },
     etapa_de_vida_fallecidos: EtapaSchema,
-    mapa_hijos: [Number],
     fecha: {
       type: Date,
       required: true
